@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,34 +17,47 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 
 public class Playground extends JFrame {
 
 	// Variable
 	int level = 1;
+	int locX = 0;
+	int locY = 0;
 	String[] list = {"Dresden", "Pirna", "Meißen", "Chemnitz", "Zwickau"};
 
 	// TODO exception if picture not found + picture in project directory
-	ImageIcon icon = new ImageIcon("C:\\Users\\christoph.herrmann\\Documents\\Informatics\\Geomaster\\MapGERv1.png",
-			"a pretty but meaningless splat");
+	ImageIcon icon1 = new ImageIcon("C:\\Users\\christoph.herrmann\\Documents\\Informatics\\Geomaster\\MapGERv1.png");
+
+	ImageIcon icon2 = new ImageIcon(
+			"C:\\Users\\christoph.herrmann\\Documents\\Informatics\\Geomaster\\Hintergrund_v1_1400x900.png");
+
+	final JTextField loctext = new JTextField();
 
 	public Playground() { // Constructor
-
-		final JLabel labLev = new JLabel(Integer.toString(this.level));
-		final JLabel labCity = new JLabel("Gesuchte Stadt: " + this.list[0]);
-
-		final JLabel label1 = new JLabel("Image and Text", this.icon, SwingConstants.LEFT);
-		label1.setLocation(30, 40);
 
 		// GUI
 		setTitle("Unsre GUI");
 		setLocationRelativeTo(null);
-		setSize(400, 500);
+		setSize(300, 200);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+		// Labels
+		final JLabel labLev = new JLabel(Integer.toString(this.level));
+		final JLabel labLocX = new JLabel("X: " + Integer.toString(this.locX));
+		final JLabel labLocY = new JLabel("Y: " + Integer.toString(this.locY));
+		final JLabel labCity = new JLabel("Gesuchte Stadt: " + this.list[0]);
+
+		final JLabel label1 = new JLabel(this.icon1);
+		label1.setLocation(0, 0);
+
+		final JLabel label2 = new JLabel(this.icon2);
+		label1.setLocation(0, 0);
 
 		// Buttons
 		final JButton cbutton = new JButton("Weiter");
+		cbutton.setSize(12, 12);
 		cbutton.addActionListener(new ActionListener() {
 
 			@Override
@@ -85,11 +100,49 @@ public class Playground extends JFrame {
 		// Layout
 		final Container pane = getContentPane();
 		pane.setLayout(new FlowLayout());
+		// pane.add(label2);
+		// pane.add(label1);
 		pane.add(cbutton);
 		pane.add(mbutton);
 		pane.add(labLev);
+		pane.add(labLocX);
+		pane.add(labLocY);
 		pane.add(labCity);
-		pane.add(label1);
+		pane.add(this.loctext);
+		pane.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				final int x = e.getX();
+				final int y = e.getY();
+				Playground.this.loctext.setText("X:" + x + " Y:" + y);
+				System.out.println(x + "," + y);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 	}
 
@@ -99,7 +152,22 @@ public class Playground extends JFrame {
 
 	void setLevel(final int level) { // Setter
 		this.level = level;
+	}
 
+	int getlocX() { // Getter
+		return this.locX;
+	}
+
+	void setLocX(final int locX) { // Setter
+		this.locX = locX;
+	}
+
+	int getlocY() { // Getter
+		return this.locY;
+	}
+
+	void setLocY(final int locY) { // Setter
+		this.locY = locY;
 	}
 
 }
