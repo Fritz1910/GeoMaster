@@ -1,10 +1,10 @@
-package swing_experience;
+package swingexperience;
 
-public class City {
+final class City {
 
 	String name;
-	double cityLocX;
-	double cityLocY;
+	private final double cityLocX;
+	private final double cityLocY;
 
 	City(String name, double cityLocX, double cityLocY) {
 		this.name = name;
