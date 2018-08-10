@@ -2,7 +2,6 @@ package swing_experience;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,21 +11,17 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Menu extends JFrame {
 
-	ImageIcon icon = new ImageIcon(
-			"C:\\Users\\christoph.herrmann\\Documents\\Informatics\\Geomaster\\Hintergrund_v1_400x400.png",
-			"a pretty but meaningless splat");
+	ImageIcon icon = new ImageIcon(this.getClass().getResource("/Hintergrund_v1_400x400.png"));
+
 	final JLabel label1 = new JLabel("Image and Text", this.icon, SwingConstants.CENTER);
 
 	public Menu() {
@@ -67,19 +62,17 @@ public class Menu extends JFrame {
 			}
 		});
 
-		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		final JScrollPane sp = new JScrollPane();
-		final JList<String> font_list = new JList<>(ge.getAvailableFontFamilyNames());
-		sp.setViewportView(font_list);
-
-		final JTextArea ta = new JTextArea("fgmog jfdkgfkmnlgklm");
+//		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+//		final JScrollPane sp = new JScrollPane();
+//		final JList<String> font_list = new JList<>(ge.getAvailableFontFamilyNames());
+//		sp.setViewportView(font_list);
 
 		// Menubar
 		final JMenuBar menu = new JMenuBar();
 		final JMenu datei = new JMenu("Datei");
 		final JMenu submenu = new JMenu("Submenu");
 		final JMenuItem item1 = new JMenuItem("ich bin im sub");
-		final JMenuItem abo = new JMenuItem("Abonniert mich =)");
+		final JMenuItem abo = new JMenuItem("Link");
 
 		submenu.add(item1);
 		datei.add(submenu);

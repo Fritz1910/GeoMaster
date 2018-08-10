@@ -1,24 +1,33 @@
 package swing_experience;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 public class City {
 
 	String name;
-	int x;
-	int y;
+	double cityLocX;
+	double cityLocY;
 
-	private City(String name, int x, int y) {
+	City(String name, double cityLocX, double cityLocY) {
 		this.name = name;
-		this.x = x;
-		this.y = y;
+		this.cityLocX = cityLocX;
+		this.cityLocY = cityLocY;
 	}
 
-	private final List<City> cities = new ArrayList<>();
+//	private final List<City> cities = new ArrayList<>();
+//
+//	void addStadt(final City city) {
+//		this.cities.add(Objects.requireNonNull(city, "PanelFile Panel = null"));
+//	}
 
-	void addStadt(final City city) {
-		this.cities.add(Objects.requireNonNull(city, "PanelFile Panel = null"));
+	String getName() {
+		return this.name;
 	}
+
+	double getCityLocX() {
+		return this.cityLocX;
+	}
+
+	double getCityLocY() {
+		return this.cityLocY;
+	}
+
 }

@@ -17,41 +17,41 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 public class Playground extends JFrame {
 
-	// Variable
+	// Variables
 	int level = 1;
-	int locX = 0;
-	int locY = 0;
-	String[] list = {"Dresden", "Pirna", "Meißen", "Chemnitz", "Zwickau"};
+	double locX = 0;
+	double locY = 0;
+	double distance = 0;
+	private City city = null;
 
-	// TODO exception if picture not found + picture in project directory
-	ImageIcon icon1 = new ImageIcon("C:\\Users\\christoph.herrmann\\Documents\\Informatics\\Geomaster\\MapGERv1.png");
-
-	ImageIcon icon2 = new ImageIcon(
-			"C:\\Users\\christoph.herrmann\\Documents\\Informatics\\Geomaster\\Hintergrund_v1_1400x900.png");
-
-	final JTextField loctext = new JTextField();
+	// IMAGES on icons
+	// TODO exception if picture not found
+	ImageIcon icon1 = new ImageIcon(this.getClass().getResource("/MapGERv1.png"));
+	ImageIcon icon2 = new ImageIcon(this.getClass().getResource("/Hintergrund_v1_1400x900.png"));
 
 	public Playground() { // Constructor
 
+		this.city = new City("Dresden", 12, 12);
+		this.distance = distanceCalculation(this.locX, this.locY, this.city.getCityLocX(), this.city.getCityLocY());
+
 		// GUI
-		setTitle("Unsre GUI");
+		setTitle("GeoMaster");
 		setLocationRelativeTo(null);
 		setSize(300, 200);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		// Labels
-		final JLabel labLev = new JLabel(Integer.toString(this.level));
-		final JLabel labLocX = new JLabel("X: " + Integer.toString(this.locX));
-		final JLabel labLocY = new JLabel("Y: " + Integer.toString(this.locY));
-		final JLabel labCity = new JLabel("Gesuchte Stadt: " + this.list[0]);
+		final JLabel labLev = new JLabel("Level: " + Integer.toString(this.level));
+		final JLabel labLocX = new JLabel("X: " + Double.toString(this.locX));
+		final JLabel labLocY = new JLabel("Y: " + Double.toString(this.locY));
+		final JLabel labCity = new JLabel("Gesuchte Stadt: " + this.city.getName());
+		final JLabel labDistance = new JLabel("Abstand: " + Double.toString(this.distance));
 
 		final JLabel label1 = new JLabel(this.icon1);
 		label1.setLocation(0, 0);
-
 		final JLabel label2 = new JLabel(this.icon2);
 		label1.setLocation(0, 0);
 
@@ -62,8 +62,18 @@ public class Playground extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setLevel(getLevel() + 1);
-				labLev.setText(Integer.toString(Playground.this.level));
+				setLevel(getLevel() + 1);// set Variable on level higher
+				// set label to display new variable from level
+				labLev.setText("Level: " + Integer.toString(Playground.this.level));
+				// reset coordinates and its labels
+				// TODO 0 is no optimal default for "no location selected", better idea? +
+				// exception needed if no location is selected + field for its message OR
+				// continue button is already free if location is selected
+				setLocX(0);
+				setLocY(0);
+				labLocX.setText("X: " + Double.toString(Playground.this.locX));
+				labLocY.setText("Y: " + Double.toString(Playground.this.locY));
+
 			}
 		});
 
@@ -108,15 +118,25 @@ public class Playground extends JFrame {
 		pane.add(labLocX);
 		pane.add(labLocY);
 		pane.add(labCity);
-		pane.add(this.loctext);
+		pane.add(labDistance);
 		pane.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				final int x = e.getX();
 				final int y = e.getY();
-				Playground.this.loctext.setText("X:" + x + " Y:" + y);
-				System.out.println(x + "," + y);
+				System.out.println(x + "," + y);// console
+
+				setLocX(x);// set variable with new cordinate
+				setLocY(y);
+				// set label with new coordinate from locX
+				/*
+				 * //TODO condition to keep coordinates on map: if x or y is higher/lower
+				 * than ... (= out of map) then stay at coordinates before
+				 */
+				labLocX.setText("X: " + Double.toString(Playground.this.locX));
+				labLocY.setText("Y: " + Double.toString(Playground.this.locY));
+
 			}
 
 			@Override
@@ -154,7 +174,7 @@ public class Playground extends JFrame {
 		this.level = level;
 	}
 
-	int getlocX() { // Getter
+	double getlocX() { // Getter
 		return this.locX;
 	}
 
@@ -162,12 +182,20 @@ public class Playground extends JFrame {
 		this.locX = locX;
 	}
 
-	int getlocY() { // Getter
+	double getlocY() { // Getter
 		return this.locY;
 	}
 
 	void setLocY(final int locY) { // Setter
 		this.locY = locY;
+	}
+
+	static double distanceCalculation(double locX, double locY, double cityLocX, double cityLocY) {
+		final double deltaX = Math.abs(locX - cityLocX);
+		final double deltaY = Math.abs(locY - cityLocY);
+		final double distance = Math.sqrt((Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
+		return distance;
+
 	}
 
 }
